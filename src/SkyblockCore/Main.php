@@ -18,19 +18,23 @@ class Main extends PluginBase implements Listener {
     private QuestManager $quests;
     private LevelManager $levels;
 
-    public function onEnable(): void {
-        $this->saveDefaultConfig();
-        
-        $this->data = new DataManager($this);
-        $this->island = new IslandManager($this);
-        $this->quests = new QuestManager($this);
-        $this->levels = new LevelManager($this);
+  public function onEnable(): void {
+    $this->saveDefaultConfig();
+    
+    // Initialize core components
+    $this->data = new DataManager($this);
+    $this->island = new IslandManager($this);
+    $this->levels = new LevelManager($this);
+    $this->quests = new QuestManager($this); // Now self-registers events
 
-        $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->island->generateWorld();
-        
-        $this->getLogger()->info("SkyblockCore enabled!");
-    }
+    // Generate world after initialization
+    $this->island->generateWorld();
+    
+    // Remove this line from original code:
+    // $this->getServer()->getPluginManager()->registerEvents($this, $this);
+    
+    $this->getLogger()->info("SkyblockCore enabled!");
+}
 
     public function onJoin(PlayerJoinEvent $event): void {
         $player = $event->getPlayer();
