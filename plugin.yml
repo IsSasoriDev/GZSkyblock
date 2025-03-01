@@ -2,22 +2,20 @@ name: GZSkyblock
 main: SkyblockCore\Main
 api: 5.0.0
 version: 1.0.0
-author: YourName
+author: SasoriDev
 commands:
   island:
     description: Manage your skyblock island
     usage: "/island [create|teleport|info]"
     permission: "skyblock.command.island"
-  balance:
-    description: Check your balance
-    usage: "/balance"
-    permission: "skyblock.command.balance"
+-  balance:
+-    description: Check your balance
+-    usage: "/balance"
+-    permission: "skyblock.command.balance"
 permissions:
   skyblock.command.island:
     description: Allows use of island commands
     default: true
-  skyblock.command.balance:
-    description: Allows checking balance
-    default: true
-depend:
-  - BedrockEconomy
+-  skyblock.command.balance:
+-    description: Allows checking balance
+-    default: true
