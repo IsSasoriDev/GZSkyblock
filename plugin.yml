@@ -1,14 +1,23 @@
-name: SkyblockCore
-version: 1.0.0
+name: GZSkyblock
 main: SkyblockCore\Main
 api: 5.0.0
+version: 1.0.0
 author: YourName
-description: Skyblock core with economy integration
 commands:
   island:
-    description: Skyblock commands
-    usage: "/island create|teleport|info"
+    description: Manage your skyblock island
+    usage: "/island [create|teleport|info]"
+    permission: "skyblock.command.island"  # Add this line
   balance:
     description: Check your balance
     usage: "/balance"
-depend: ["EconomyAPI"]
+    permission: "skyblock.command.balance"  # Add this line
+permissions:
+  skyblock.command.island:
+    description: Allows use of island commands
+    default: true
+  skyblock.command.balance:
+    description: Allows checking balance
+    default: true
+depend:
+  - EconomyAPI
