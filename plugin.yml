@@ -11,10 +11,18 @@ commands:
   quests:
     description: View available quests
     usage: "/quests"
+    permission: "skyblock.command.quests"  # Added permission
   level:
     description: Check your island level
     usage: "/level"
+    permission: "skyblock.command.level"  # Added permission
 permissions:
   skyblock.command.island:
     description: Allows use of island commands
+    default: true
+  skyblock.command.quests:
+    description: Allows viewing quests
+    default: true
+  skyblock.command.level:
+    description: Allows checking island level
     default: true
