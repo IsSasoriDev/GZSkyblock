@@ -20,18 +20,23 @@ class Main extends PluginBase implements Listener {
     private QuestManager $quests;
     private LevelManager $levels;
 
-    public function onEnable(): void {
-        $this->saveDefaultConfig();
-        
-        if (!class_exists(BedrockEconomy::class)) {
-            $this->getLogger()->error("BedrockEconomy not found! Disabling plugin...");
-            $this->getServer()->getPluginManager()->disablePlugin($this);
-            return;
-        }
+public function onEnable(): void {
+    $this->saveDefaultConfig();
+    
+    // Verify BedrockEconomyAPI exists
+    if (!class_exists(BedrockEconomyAPI::class)) {
+        $this->getLogger()->error("BedrockEconomy not installed! Disabling...");
+        $this->getServer()->getPluginManager()->disablePlugin($this);
+        return;
+    }
 
-        $this->data = new DataManager($this);
-        $this->economy = new EconomyManager($this);
-        $this->island = new IslandManager($this);
+    // Initialize managers
+    $this->economy = new EconomyManager();
+    $this->data = new DataManager($this);
+    $this->island = new IslandManager($this);
+    
+    // ... rest of initialization code
+}
         $this->quests = new QuestManager($this);
         $this->levels = new LevelManager($this);
 
