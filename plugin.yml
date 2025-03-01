@@ -7,11 +7,11 @@ commands:
   island:
     description: Manage your skyblock island
     usage: "/island [create|teleport|info]"
-    permission: "skyblock.command.island"  # Add this line
+    permission: "skyblock.command.island"
   balance:
     description: Check your balance
     usage: "/balance"
-    permission: "skyblock.command.balance"  # Add this line
+    permission: "skyblock.command.balance"
 permissions:
   skyblock.command.island:
     description: Allows use of island commands
@@ -20,4 +20,4 @@ permissions:
     description: Allows checking balance
     default: true
 depend:
-  - EconomyAPI
+  - BedrockEconomy
