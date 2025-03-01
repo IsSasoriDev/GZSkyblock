@@ -3,21 +3,18 @@
 namespace SkyblockCore;
 
 use pocketmine\player\Player;
-use cooldogedev\BedrockEconomy\BedrockEconomy;
 use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
 
 class EconomyManager {
 
-    private Main $plugin;
     private BedrockEconomyAPI $economy;
 
-    public function __construct(Main $plugin) {
-        $this->plugin = $plugin;
-        $this->economy = BedrockEconomy::getInstance()->getAPI();
+    public function __construct() {
+        $this->economy = BedrockEconomyAPI::getInstance();
     }
 
     public function getBalance(Player $player): int {
-        return $this->economy->getPlayerBalance($player->getName())->wait();
+        return $this->economy->getPlayerBalance($player->getName());
     }
 
     public function setBalance(Player $player, int $amount): void {
