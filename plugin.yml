@@ -1,0 +1,14 @@
+name: SkyblockCore
+version: 1.0.0
+main: SkyblockCore\Main
+api: 5.0.0
+author: YourName
+description: Skyblock core with economy integration
+commands:
+  island:
+    description: Skyblock commands
+    usage: "/island create|teleport|info"
+  balance:
+    description: Check your balance
+    usage: "/balance"
+depend: ["EconomyAPI"]

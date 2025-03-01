@@ -1,0 +1,24 @@
+quests:
+  "Wood Collector":
+    description: "Collect 64 oak logs"
+    objective:
+      type: "block_break"
+      block: "oak_log"
+      amount: 64
+    reward:
+      xp: 100
+      money: 500
+    cooldown: 86400  # 24 hours in seconds
+  "Mob Hunter":
+    description: "Kill 20 mobs"
+    objective:
+      type: "entity_kill"
+      entity: "zombie|skeleton|spider"
+      amount: 20
+    reward:
+      xp: 150
+      money: 750
+
+leveling:
+  xp_per_level: 1000
+  base_reward: 50
