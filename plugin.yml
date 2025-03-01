@@ -1,4 +1,4 @@
-name: GZSkyblock
+name: SkyblockCore
 main: SkyblockCore\Main
 api: 5.0.0
 version: 1.0.0
@@ -8,11 +8,13 @@ commands:
     description: Manage your skyblock island
     usage: "/island [create|teleport|info]"
     permission: "skyblock.command.island"
-    
+  quests:
+    description: View available quests
+    usage: "/quests"
+  level:
+    description: Check your island level
+    usage: "/level"
 permissions:
   skyblock.command.island:
     description: Allows use of island commands
     default: true
--  skyblock.command.balance:
--    description: Allows checking balance
--    default: true
