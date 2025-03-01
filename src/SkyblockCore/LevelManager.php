@@ -13,31 +13,25 @@ class LevelManager {
     }
 
     public function addXP(Player $player, int $xp): void {
-        $data = $this->plugin->getDataManager()->getIslandData($player);
-        $newXP = $data["xp"] + $xp;
+        $data = $this->plugin->getDataManager()->getPlayerStats($player);
+        $newXP = $data['xp'] + $xp;
         $newLevel = $this->calculateLevel($newXP);
-
-        $this->plugin->getDataManager()->saveIslandData($player, [
-            "xp" => $newXP,
-            "level" => $newLevel
+        
+        $this->plugin->getDataManager()->savePlayerData($player, [
+            'xp' => $newXP,
+            'level' => $newLevel
         ]);
-
-        if($newLevel > $data["level"]) {
-            $player->sendMessage("Island Level Up! New Level: $newLevel");
+        
+        if($newLevel > $data['level']) {
+            $player->sendMessage("§aIsland Level Up! §eNew Level: $newLevel");
         }
     }
 
     private function calculateLevel(int $xp): int {
-        $config = $this->plugin->getConfig()->get("leveling");
-        return (int) floor(sqrt($xp / $config["xp_per_level"]));
-    }
-
-    public function getLevelReward(int $level): float {
-        $config = $this->plugin->getConfig()->get("leveling");
-        return $config["base_reward"] * pow(1.1, $level);
+        return (int) floor(sqrt($xp / $this->plugin->getConfig()->get("leveling.xp_per_level")));
     }
 
     public function getIslandLevel(Player $player): int {
-        return $this->plugin->getDataManager()->getIslandData($player)["level"] ?? 0;
+        return $this->plugin->getDataManager()->getPlayerStats($player)['level'];
     }
 }
