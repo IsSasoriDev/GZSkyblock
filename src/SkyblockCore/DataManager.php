@@ -16,20 +16,19 @@ class DataManager {
     }
 
     public function initializePlayer(Player $player): void {
-        $name = $player->getName();
-        if(!$this->playerData->exists($name)) {
-            $this->playerData->set($name, [
+        if(!$this->playerData->exists($player->getName())) {
+            $this->playerData->set($player->getName(), [
                 'island' => null,
                 'xp' => 0,
                 'level' => 1,
-                'balance' => $this->plugin->getConfig()->get("start_balance"),
+                // Remove balance field
                 'completed_quests' => [],
                 'active_quests' => []
             ]);
             $this->playerData->save();
         }
     }
-
+}
     public function getIslandData(Player $player): array {
         return $this->playerData->get($player->getName())['island'] ?? [];
     }
