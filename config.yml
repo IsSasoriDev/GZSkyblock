@@ -1,3 +1,6 @@
+# Remove EconomyAPI settings
+economy:
+  enable_transactions: true
 quests:
   "Wood Collector":
     description: "Collect 64 oak logs"
