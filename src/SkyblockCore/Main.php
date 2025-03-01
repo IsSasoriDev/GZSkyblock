@@ -46,43 +46,65 @@ class Main extends PluginBase implements Listener {
     }
 
     public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool {
-        switch(strtolower($cmd->getName())) {
+        $commandName = strtolower($cmd->getName());
+        
+        if (!$sender instanceof Player) {
+            $sender->sendMessage("§cThis command must be used in-game!");
+            return false;
+        }
+
+        switch($commandName) {
             case "island":
-                if (!$sender instanceof Player) return $this->sendConsoleError($sender);
-                return $this->handleIslandCommand($sender, $args);
-                
-            case "quests":
-                if ($sender instanceof Player) $this->showQuestInterface($sender);
-                return true;
-                
-            case "level":
-                if ($sender instanceof Player) {
-                    $level = $this->levels->getIslandLevel($sender);
-                    $sender->sendMessage("Island Level: §e" . $level);
+                if (!$sender->hasPermission("skyblock.command.island")) {
+                    $sender->sendMessage("§cYou don't have permission to use this command!");
+                    return false;
                 }
+                return $this->handleIslandCommand($sender, $args);
+
+            case "quests":
+                if (!$sender->hasPermission("skyblock.command.quests")) {
+                    $sender->sendMessage("§cYou don't have permission to view quests!");
+                    return false;
+                }
+                $this->showQuestInterface($sender);
                 return true;
-                
-            default: return false;
+
+            case "level":
+                if (!$sender->hasPermission("skyblock.command.level")) {
+                    $sender->sendMessage("§cYou don't have permission to check levels!");
+                    return false;
+                }
+                $level = $this->levels->getIslandLevel($sender);
+                $sender->sendMessage("§aIsland Level: §e" . $level);
+                return true;
+
+            default:
+                return false;
         }
     }
 
     private function handleIslandCommand(Player $player, array $args): bool {
-        if(empty($args)) return $this->sendUsage($player);
-        
+        if (empty($args)) {
+            $player->sendMessage("§cUsage: /island <create|teleport|info>");
+            return false;
+        }
+
         switch(strtolower($args[0])) {
             case "create":
                 $this->island->createIsland($player);
                 return true;
-                
+
             case "teleport":
                 $this->island->teleportToIsland($player);
                 return true;
-                
+
             case "info":
                 $player->sendMessage($this->island->getIslandInfo($player));
                 return true;
-                
-            default: return $this->sendUsage($player);
+
+            default:
+                $player->sendMessage("§cInvalid subcommand! Usage: /island <create|teleport|info>");
+                return false;
         }
     }
 
@@ -110,18 +132,25 @@ class Main extends PluginBase implements Listener {
         $player->sendMessage(implode("\n", $message));
     }
 
-    private function sendConsoleError(CommandSender $sender): bool {
-        $sender->sendMessage("This command must be used in-game!");
-        return false;
-    }
-
-    private function sendUsage(Player $player): bool {
-        $player->sendMessage("Usage: /island <create|teleport|info>");
-        return false;
-    }
-
     public function onDisable(): void {
         $this->data->saveAll();
         $this->getLogger()->info("SkyblockCore disabled!");
+    }
+
+    // Getters
+    public function getIslandManager(): IslandManager {
+        return $this->island;
+    }
+
+    public function getDataManager(): DataManager {
+        return $this->data;
+    }
+
+    public function getQuestManager(): QuestManager {
+        return $this->quests;
+    }
+
+    public function getLevelManager(): LevelManager {
+        return $this->levels;
     }
 }
